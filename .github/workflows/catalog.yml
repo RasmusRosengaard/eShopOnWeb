@@ -12,4 +12,6 @@ jobs:
     uses: ./.github/workflows/_dotnet-service.yml
     with:
       service: Catalog
-      image: catalog # det navn som imaget får bagefter build 
+      image: catalog # det navn som imaget får bagefter build
+    secrets:
+      DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}

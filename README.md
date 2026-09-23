@@ -41,6 +41,10 @@ services/<service>/tests/<service>.IntegrationTests/
 solutionen. Den er indtil videre den eneste aktive pipeline, da `services/` er tom.
 For hver strangler-cyklus skrumper dens path-filter, og til sidst kan den fjernes helt.
 
+Har tilføjet et discord error job, som kun køres hvis nogle af de andre jobs fejler. Dvs. jeg får en discord besked, hvis mit commit fejlen CI/CD. DISCORD_WEBHOOK er tilføjet som repository secret på github.
+
+For at opfylde opgaven helt mangler min microservice CI/CD at ligge imaget et op i et docker registry, så jeg også selv nemt vil kunne hente dem i docker-compose til at køre projektet.
+
 ## Strangler Fig Pattern implementering - funktionalitet flyttes gradvist ud uden driftafbrydelse
 
 ### Først CatalogService

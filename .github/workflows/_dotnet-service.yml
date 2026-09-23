@@ -16,6 +16,9 @@ on:
       image:
         type: string
         required: true  # vi skal have et image-navn fra kalderen
+    secrets:
+      DISCORD_WEBHOOK:
+        required: false # sættes som repository secret; uden den springes notifikationen over
 
 jobs:
   # build stage
@@ -82,7 +85,7 @@ jobs:
           push: false
           tags: ${{ inputs.image }}:${{ github.sha }}
 
-  # Environment Deployment: staging og production
+  # Environment Deployment: staging og production 
   deploy-staging:
     needs: package
     runs-on: ubuntu-latest
@@ -96,3 +99,24 @@ jobs:
     environment: production     # krav: Implementer manual approval for production deploys
     steps:
       - run: echo "Deploy ${{ inputs.image }}:${{ github.sha }} til production"
+
+  # failure discord notification: kører KUN hvis et af ovenstående jobs fejlede
+  notify-failure:
+    needs: [build, fast-tests, slow-tests, package, deploy-staging, deploy-production]
+    if: failure()
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send besked til Discord
+        env:
+          WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+        run: |
+          if [ -z "$WEBHOOK" ]; then
+            echo "DISCORD_WEBHOOK er ikke sat - springer notifikation over"
+            exit 0
+          fi
+          RUN_URL="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          curl -sS -H "Content-Type: application/json" -X POST "$WEBHOOK" -d @- <<JSON
+          {
+            "content": "**Pipeline fejlede: ${{ inputs.service }}**\nCommit: \`${{ github.sha }}\`\n$RUN_URL"
+          }
+          JSON
