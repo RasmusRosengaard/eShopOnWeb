@@ -52,6 +52,7 @@ jobs:
       - uses: actions/download-artifact@v4
         with:
           name: build-${{ inputs.service }}
+          path: services/${{ inputs.service }}
 
       - run: >
           dotnet test ./services/${{ inputs.service }}/tests/${{ inputs.service }}.UnitTests
@@ -68,6 +69,7 @@ jobs:
       - uses: actions/download-artifact@v4
         with:
           name: build-${{ inputs.service }}
+          path: services/${{ inputs.service }}
 
       - run: >
           dotnet test ./services/${{ inputs.service }}/tests/${{ inputs.service }}.IntegrationTests

@@ -5,6 +5,8 @@ on:
     branches: [main]
     paths:
       - 'services/Gateway/**'
+      - '.github/workflows/gateway.yml'
+      - ".github/workflows/_dotnet-service.yml"
 jobs:
   pipeline:
     uses: ./.github/workflows/_dotnet-service.yml
