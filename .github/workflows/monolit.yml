@@ -1,8 +1,10 @@
 name: eShopOnWeb Build and Test
-
+# ci/cd som tester og bygger den orginale monolit, som den er nu. 
+# Dette workflow er kun midlertidigt, indtil vi har udtrukket de forskellige microservices.
+# disse paths skal specififers senere, når jeg udtrækker monolitten til microservices, "ideelt" kan dette helt erstattes af forskellige service.yml workflow.
 on:
   push:
-    paths: # disse paths skal specififers senere, når jeg udtrækker monolitten til microservices, "ideelt" kan dette helt erstattes af forskellige service.yml workflow.  
+    paths: 
       - 'src/**'
       - 'tests/**'
       - 'Directory.Packages.props'
