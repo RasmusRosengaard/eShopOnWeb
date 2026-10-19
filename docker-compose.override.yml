@@ -24,3 +24,14 @@ services:
       - ASPNETCORE_URLS=http://+:8080
     ports:
       - "5000:8080"
+  # NY
+  catalogservice:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Docker
+      - ASPNETCORE_URLS=http://+:8080
+    ports:
+      - "5300:8080"
+  # NY
+  catalogdb:
+    ports:
+      - "1434:1433"

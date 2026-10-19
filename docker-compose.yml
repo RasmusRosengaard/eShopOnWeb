@@ -23,6 +23,20 @@ services:
     depends_on:
       - "eshopwebmvc"
       - "eshoppublicapi"
+  # Catalog Service
+  catalogservice:
+    image: ${DOCKER_REGISTRY-}catalogservice
+    build:
+      context: .
+      dockerfile: services/CatalogService/CatalogService.Api/Dockerfile
+    depends_on:
+      - "catalogdb"
+  catalogdb:
+    image: mcr.microsoft.com/azure-sql-edge
+    environment:
+      - SA_PASSWORD=@someThingComplicated1234
+      - ACCEPT_EULA=Y
+  # ----------------------- #
   sqlserver:
     image: mcr.microsoft.com/azure-sql-edge
     ports:
